@@ -10,7 +10,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
-import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 import org.junit.Assert
 import org.junit.Assert.assertTrue
@@ -46,11 +45,11 @@ abstract class BaseTest {
             return
         }
 
-        val grant: UiObject2 = device.findObject(By.textContains("Grant")) ?: error("Can't obtain read permissions")
+        val grant = device.wait(Until.findObject(By.textContains("Grant")), 30000) ?: error("Can't find grant action in warning dialog")
+        grant.click()
 
-        grant.clickAndWait(Until.newWindow(), 1000)
-        val findObject = device.findObject(By.textContains("Allow"))
-        findObject.click()
+        val allowField = device.wait(Until.findObject(By.textContains("Allow")), 10000)
+        allowField.click()
         assertTrue(device.findObject(By.checkable(true)).isChecked)
         device.pressBack()
         Espresso.onView(ViewMatchers.withId(R.id.view)).check(matches(ViewMatchers.isDisplayed()))
