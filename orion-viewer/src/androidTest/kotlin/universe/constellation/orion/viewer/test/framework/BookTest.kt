@@ -53,6 +53,10 @@ enum class BookDescription(
 
     fun openBook() = FileUtil.openFile(asFile())
 
+    override fun toString(): String {
+        return "BookDescription[path=$path]"
+    }
+
     companion object {
         private fun testEntries(): List<BookDescription> {
             return if (MANUAL_DEBUG) {
