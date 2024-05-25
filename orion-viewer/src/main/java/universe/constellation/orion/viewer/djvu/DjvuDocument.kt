@@ -46,7 +46,9 @@ class DjvuDocument(filePath: String) : AbstractDocument(filePath) {
         override fun readPageDataForRendering() {
             if (destroyed) return errorInDebug("Page $pageNum already destroyed")
             if (pagePointer == 0L && docPointer != 0L) {
-                pagePointer = getPageInternal(contextPointer, docPointer, pageNum)
+                timing("Page $pageNum extraction") {
+                    pagePointer = getPageInternal(contextPointer, docPointer, pageNum)
+                }
             }
         }
 
