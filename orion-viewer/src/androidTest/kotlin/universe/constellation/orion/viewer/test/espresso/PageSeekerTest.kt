@@ -41,6 +41,7 @@ open class PageSeekerTest(bookDescription: BookFile): BaseViewerActivityTest(boo
 
     private fun testGotoSwipe(swipe: Swipe) {
         configure()
+        Thread.sleep(1000)
         openGoTo()
         val lastPageNumber = lastPageNumber0
 
